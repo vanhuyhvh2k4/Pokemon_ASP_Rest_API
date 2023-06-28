@@ -6,7 +6,7 @@
 
         public string Name { get; set; }
 
-        public DateTime BirthDay { get; set; }
+        public DateTime BirthDate { get; set; }
 
         public ICollection<Review> Reviews { get; set; }
 
