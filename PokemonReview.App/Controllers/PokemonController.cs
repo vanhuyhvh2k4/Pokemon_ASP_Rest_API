@@ -8,7 +8,7 @@ using PokemonReview.App.Models;
 namespace PokemonReview.App.Controllers
 {
     [ApiController]
-    [Route("api/[controller]k")]
+    [Route("api/[controller]")]
     public class PokemonController : Controller
     {
         private readonly IPokemonRepository _pokemonRepository;
