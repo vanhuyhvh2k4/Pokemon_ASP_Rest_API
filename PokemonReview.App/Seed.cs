@@ -36,7 +36,7 @@ namespace PokemonReview.App
                                 Reviewer = new Reviewer(){ FirstName = "Jessica", LastName = "McGregor" } },
                             }
                         },
-                        Owner = new Owner()
+                        Owner = new Owner() 
                         {
                             FirstName = "Jack",
                             LastName = "London",
