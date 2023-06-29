@@ -1,14 +1,14 @@
 ﻿using PokemonReview.App.Data;
 using PokemonReview.App.Models;
 
-namespace PokemonReviewApp
+namespace PokemonReview.App
 {
     public class Seed
     {
         private readonly DataContext dataContext;
         public Seed(DataContext context)
         {
-            this.dataContext = context;
+            dataContext = context;
         }
         public void SeedDataContext()
         {
