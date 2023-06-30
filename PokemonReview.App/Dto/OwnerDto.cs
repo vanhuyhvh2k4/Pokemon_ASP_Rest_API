@@ -1,6 +1,8 @@
-﻿namespace PokemonReview.App.Models
+﻿using PokemonReview.App.Models;
+
+namespace PokemonReview.App.Dto
 {
-    public class Owner
+    public class OwnerDto
     {
         public int Id { get; set; }
 
@@ -9,9 +11,5 @@
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
-
-        public Country Country { get; set; }
-
-        public ICollection<PokemonOwner> PokemonOwners { get; set; }
     }
 }

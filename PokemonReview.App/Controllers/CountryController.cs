@@ -59,7 +59,7 @@ namespace PokemonReview.App.Controllers
         [ProducesResponseType(200, Type = typeof(Country))]
         public IActionResult GetCountryByAOwner(int ownerId)
         {
-            var country = _countryRepository.GetCountryByOwner(ownerId);
+            var country = _mapper.Map<CountryDto>(_countryRepository.GetCountryByOwner(ownerId));
 
             if (!ModelState.IsValid)
             {
