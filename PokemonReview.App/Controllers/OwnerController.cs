@@ -102,9 +102,9 @@ namespace PokemonReview.App.Controllers
                 return BadRequest(ModelState);
             }
 
-            var owner = _ownerRepository.GetOwners().Where(o => o.LastName.Trim().ToUpper() == ownerCreate.LastName.Trim().ToUpper());
+            var owner = _ownerRepository.GetOwners().Where(o => o.LastName.Trim().ToUpper() == ownerCreate.LastName.TrimEnd().ToUpper()).FirstOrDefault();
 
-            if (owner == null)
+            if (owner != null)
             {
                 ModelState.AddModelError("", "Owner already exists");
                 return StatusCode(422, ModelState);
