@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using PokemonReview.App.Dto;
 using PokemonReview.App.Interfaces;
 using PokemonReview.App.Models;
+using PokemonReview.App.Repository;
 
 namespace PokemonReview.App.Controllers
 {
@@ -95,14 +96,14 @@ namespace PokemonReview.App.Controllers
         [HttpPost]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
-        public IActionResult CreateOwner([FromQuery] int countryId, [FromBody] OwnerDto ownerCreate)
+        public IActionResult CreateOwner([FromQuery] int countryId, [FromBody] OwnerDto updateOwner)
         {
-            if (ownerCreate == null)
+            if (updateOwner == null)
             {
                 return BadRequest(ModelState);
             }
 
-            var owner = _ownerRepository.GetOwners().Where(o => o.LastName.Trim().ToUpper() == ownerCreate.LastName.TrimEnd().ToUpper()).FirstOrDefault();
+            var owner = _ownerRepository.GetOwners().Where(o => o.LastName.Trim().ToUpper() == updateOwner.LastName.TrimEnd().ToUpper()).FirstOrDefault();
 
             if (owner != null)
             {
@@ -110,7 +111,7 @@ namespace PokemonReview.App.Controllers
                 return StatusCode(422, ModelState);
             }
 
-            var ownerMap = _mapper.Map<Owner>(ownerCreate);
+            var ownerMap = _mapper.Map<Owner>(updateOwner);
 
             ownerMap.Country = _countryRepository.GetCountry(countryId);
 
@@ -121,6 +122,43 @@ namespace PokemonReview.App.Controllers
             }
 
             return Ok("Successfully created");
+        }
+
+        [HttpPut("{ownerId}")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        public IActionResult UpdateCategory(int ownerId, [FromBody] OwnerDto updateOwner)
+        {
+            if (updateOwner == null)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (ownerId != updateOwner.Id)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (!_ownerRepository.OwnerExists(ownerId))
+            {
+                return NotFound();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var ownerMap = _mapper.Map<Owner>(updateOwner);
+
+            if (!_ownerRepository.UpdateOwner(ownerMap))
+            {
+                ModelState.AddModelError("", "Something went wrong while saving");
+                return StatusCode(500, ModelState);
+            }
+
+            return Ok("Successfully updated");
         }
     }
 }
