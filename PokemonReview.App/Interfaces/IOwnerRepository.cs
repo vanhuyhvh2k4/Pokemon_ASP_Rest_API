@@ -18,6 +18,8 @@ namespace PokemonReview.App.Interfaces
 
         bool UpdateOwner(Owner owner);
 
+        bool DeleteOwner(Owner owner);
+
         bool Save();
     }
 }

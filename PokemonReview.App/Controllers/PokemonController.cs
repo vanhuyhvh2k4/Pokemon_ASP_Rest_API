@@ -144,5 +144,26 @@ namespace PokemonReview.App.Controllers
 
             return Ok("Successfully updated");
         }
+
+        [HttpDelete("{pokeId}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public IActionResult DeletePokemon(int pokeId)
+        {
+            if (!_pokemonRepository.PokemonExist(pokeId))
+            {
+                return NotFound();
+            }
+
+            var pokemonToDelete = _pokemonRepository.GetPokemon(pokeId);
+
+            if (!_pokemonRepository.DeletePokemon(pokemonToDelete))
+            {
+                ModelState.AddModelError("", "Something went wrong while deteting");
+            }
+
+            return Ok("Successfully deleted");
+        }
     }
 }
